@@ -37,10 +37,10 @@ services:
   redis:
     image: docker.io/redis:6
     container_name: test_devops_local_redis
-    
+
     volumes:
       - test_devops_local_redis_data:/data
-    
+
 
   celeryworker:
     <<: *django

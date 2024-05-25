@@ -19,7 +19,7 @@ from .base import env
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 # ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
-ALLOWED_HOSTS  = [ ["localhost", "0.0.0.0", "127.0.0.1",]]
+ALLOWED_HOSTS = [["localhost", "0.0.0.0", "127.0.0.1"]]
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
@@ -205,7 +205,10 @@ sentry_sdk.init(
 # -------------------------------------------------------------------------------
 # Tools that generate code samples can use SERVERS to point to the correct domain
 SPECTACULAR_SETTINGS["SERVERS"] = [
-    {"url": "ec2-54-255-45-113.ap-southeast-1.compute.amazonaws.com", "description": "Production server"},
+    {
+        "url": "ec2-54-255-45-113.ap-southeast-1.compute.amazonaws.com",
+        "description": "Production server",
+    },
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
