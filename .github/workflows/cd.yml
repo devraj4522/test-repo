@@ -1,0 +1,30 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        uses: docker/compose-cli-action@v0.6.0
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t your-docker-image .
+          docker tag your-docker-image:latest your-aws-ecr-repo:latest
+          docker login -u AWS -p ${{ secrets.AWS_ECR_TOKEN }} your-aws-ecr-repo
+          docker push your-aws-ecr-repo:latest
+
+      - name: Deploy to AWS EC2
+        run: |
+          ssh-keyscan your-ec2-instance-ip >> ~/.ssh/known_hosts
+          scp -r your-docker-compose-file.yml your-ec2-instance-ip:/path/to/your/directory
+          ssh your-ec2-instance-ip "cd /path/to/your/directory && docker-compose up -d"
